@@ -1,4 +1,4 @@
--- MySQL dump 
+-- MySQL dump 10.11
 --
 -- Host: localhost    Database: xpos
 -- ------------------------------------------------------
@@ -46,10 +46,50 @@ CREATE TABLE `camera_brand_model` (
   `zoom` decimal(2,2) DEFAULT NULL,
   `small_image` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `large_image` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `mount_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2561 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 SET character_set_client = @saved_cs_client;
 
+--
+-- Table structure for table `lens`
+--
+
+DROP TABLE IF EXISTS `lens`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `lens` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `lens_id` int(10) unsigned DEFAULT NULL,
+  `name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `type` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `max_focal_length` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `min_focal_length` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `max_aperture_at_min_focal` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `max_aperture_at_max_focal` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `compatible_camera_body` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `compatible_camera_brand` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image_url` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `crop_factor` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `mount_id` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `lens_mount`
+--
+
+DROP TABLE IF EXISTS `lens_mount`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `lens_mount` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `compatible_with` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `photo`
@@ -60,15 +100,14 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `photo` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `photo_id` int(10) NOT NULL,
+  `photo_id` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `url` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `tags` mediumtext COLLATE utf8_unicode_ci,
-  `title` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `title` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `photo_url_idx` (`url`) USING HASH
+) ENGINE=MyISAM AUTO_INCREMENT=10358 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 SET character_set_client = @saved_cs_client;
-
-
 
 --
 -- Table structure for table `photo_has_exif`
@@ -161,7 +200,6 @@ CREATE TABLE `user` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 SET character_set_client = @saved_cs_client;
 
-
 --
 -- Table structure for table `user_has_photo`
 --
@@ -176,8 +214,6 @@ CREATE TABLE `user_has_photo` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 SET character_set_client = @saved_cs_client;
-
-
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -188,4 +224,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-12-20  6:54:15
+-- Dump completed on 2013-12-23  9:45:25
