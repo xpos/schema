@@ -73,7 +73,7 @@ CREATE TABLE `lens` (
   `crop_factor` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `mount_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=1364 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -86,7 +86,6 @@ SET character_set_client = utf8;
 CREATE TABLE `lens_mount` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `compatible_with` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 SET character_set_client = @saved_cs_client;
@@ -180,8 +179,23 @@ CREATE TABLE `photo_has_exif` (
   `gps_altitude` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `gps_altitude_ref` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `lens_id` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `camera_lens_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=7559 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `theme`
+--
+
+DROP TABLE IF EXISTS `theme`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `theme` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -195,8 +209,43 @@ CREATE TABLE `user` (
   `username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `user_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(512) COLLATE utf8_unicode_ci NOT NULL,
   `oath_token` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`user_id`,`id`)
+  `nickname` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `img_url` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `user_follows`
+--
+
+DROP TABLE IF EXISTS `user_follows`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `user_follows` (
+  `follower_id` int(11) NOT NULL,
+  `followee_id` int(11) NOT NULL,
+  KEY `follower_id` (`follower_id`),
+  KEY `followee_id` (`followee_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `user_gear`
+--
+
+DROP TABLE IF EXISTS `user_gear`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `user_gear` (
+  `user_id` int(11) NOT NULL,
+  `camera_brand_model_id` int(11) DEFAULT NULL,
+  `lens_id` int(11) DEFAULT NULL,
+  KEY `user_id` (`user_id`),
+  KEY `camera_brand_model_id` (`camera_brand_model_id`),
+  KEY `lens_id` (`lens_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 SET character_set_client = @saved_cs_client;
 
@@ -214,6 +263,21 @@ CREATE TABLE `user_has_photo` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `user_theme`
+--
+
+DROP TABLE IF EXISTS `user_theme`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `user_theme` (
+  `user_id` int(11) DEFAULT NULL,
+  `theme_id` int(11) DEFAULT NULL,
+  KEY `user_id` (`user_id`),
+  KEY `theme_id` (`theme_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+SET character_set_client = @saved_cs_client;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -224,4 +288,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-12-23  9:45:25
+-- Dump completed on 2014-01-07 17:34:47
