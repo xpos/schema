@@ -180,6 +180,8 @@ CREATE TABLE `photo_has_exif` (
   `gps_altitude_ref` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `lens_id` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   `camera_lens_id` int(10) unsigned DEFAULT NULL,
+  `norm_aperture` decimal(3,1) DEFAULT NULL,
+  `norm_shutter` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=7559 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 SET character_set_client = @saved_cs_client;
@@ -288,4 +290,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-07 17:34:47
+-- Dump completed on 2014-01-11  9:24:51
